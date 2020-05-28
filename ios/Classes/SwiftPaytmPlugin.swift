@@ -4,6 +4,8 @@ import AppInvokeSDK
 
 public class SwiftPaytmPlugin: NSObject, FlutterPlugin, AIDelegate{
     
+    private var appInvoke : AIHandler = AIHandler()
+    
     public func openPaymentWebVC(_ controller: UIViewController?) {
         print("Response2")
         
@@ -21,8 +23,29 @@ public class SwiftPaytmPlugin: NSObject, FlutterPlugin, AIDelegate{
         print(response)
         
         var paramMap = [String: Any]()
-        paramMap["error"]=false
-        paramMap["response"]=response
+        
+        let status=response["STATUS"] as! String
+        
+        guard status.count >= 0 else {
+            paramMap["error"]=true
+            paramMap["errorMessage"]="Transaction Cancelled"
+            return;
+        }
+        
+        
+        
+        if(status.elementsEqual("TXN_FAILURE")){
+            paramMap["error"]=true
+            paramMap["errorMessage"]=response["RESPMSG"]
+            paramMap["response"]=response
+        }else{
+            paramMap["error"]=false
+            paramMap["response"]=response
+        }
+        
+        
+        
+        
         
         self.flutterResult!(paramMap)
     }
@@ -56,9 +79,9 @@ public class SwiftPaytmPlugin: NSObject, FlutterPlugin, AIDelegate{
             let callBackUrl = arguements!["callBackUrl"] as! String
             
             print(callBackUrl);
-            let handler=AIHandler.init()
             
-            handler.openPaytm(merchantId: mId, orderId: orderId, txnToken: txnToken, amount: amount, redirectionUrl: callBackUrl , delegate: self)
+            
+            appInvoke.openPaytm(merchantId: mId, orderId: orderId, txnToken: txnToken, amount: amount, redirectionUrl: callBackUrl , delegate: self)
             
         }
         
