@@ -79,6 +79,10 @@ In case merchant don’t have callback URL, Add an entry into Info.plist
   
   ``` 
 
+### GENERATE TOKEN
+For SERVER CODE:
+[Paytm Plugin Server Code](https://github.com/mrdishant/Paytm-All-in-one-flutter-sdk/tree/master/Paytm_Plugin_Server)
+
 ### Support
 For Cloning the example app code visit:
 [Paytm Plugin](https://github.com/mrdishant/Paytm-All-in-one-flutter-sdk.git)

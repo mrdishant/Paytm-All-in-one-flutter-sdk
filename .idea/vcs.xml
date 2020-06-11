@@ -2,6 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Paytm_Plugin_Server" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/example/ios/.symlinks/plugins/paytm" vcs="Git" />
   </component>
 </project>

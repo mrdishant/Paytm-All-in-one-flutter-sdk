@@ -13,7 +13,7 @@ class _MyAppState extends State<MyApp> {
   String payment_response = null;
 
   String mid = "";
-  String key_secret = "";
+  String PAYTM_MERCHANT_KEY = "";
   String website = "DEFAULT";
   double amount = 1;
   bool loading = false;
@@ -52,7 +52,7 @@ class _MyAppState extends State<MyApp> {
                 ),
                 TextField(
                   onChanged: (value) {
-                    key_secret = value;
+                    PAYTM_MERCHANT_KEY = value;
                   },
                   decoration:
                       InputDecoration(hintText: "Enter Merchant Key here"),
@@ -157,7 +157,7 @@ class _MyAppState extends State<MyApp> {
             "?mid=" +
             mid +
             "&key_secret=" +
-            key_secret +
+            PAYTM_MERCHANT_KEY +
             "&website=" +
             website +
             "&orderId=" +
