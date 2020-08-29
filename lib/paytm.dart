@@ -11,6 +11,7 @@ class Paytm {
     String txnToken,
     String txnAmount,
     String callBackUrl,
+    bool isStaging,
   ) async {
     assert(mId != null);
     assert(orderId != null);
@@ -25,6 +26,7 @@ class Paytm {
       'txnToken': txnToken,
       'txnAmount': txnAmount,
       'callBackUrl': callBackUrl,
+      'isStaging': isStaging,
     });
 
     return response;

@@ -94,17 +94,27 @@ public class PaytmPlugin implements FlutterPlugin, MethodCallHandler, PluginRegi
             String orderId = call.argument("orderId").toString();
             String txnToken = call.argument("txnToken").toString();
             String txnAmount = call.argument("txnAmount").toString();
-            String callBackUrl = call.argument("callBackUrl").toString();
-            beginPayment(mId, orderId, txnToken, txnAmount, callBackUrl);
+            String callbackUrl = call.argument("callBackUrl").toString();
+            boolean isStaging = (Boolean) call.argument("isStaging");
+            beginPayment(mId, orderId, txnToken, txnAmount, callbackUrl, isStaging);
         } else {
             result.notImplemented();
         }
     }
 
-    private void beginPayment(String mId, String orderId, String txnToken, String txnAmount, String callBackUrl) {
+    private void beginPayment(String mId, String orderId, String txnToken, String txnAmount, String callbackUrl, boolean isStaging) {
+        String host = "https://securegw.paytm.in/";
+        if (isStaging) {
+            host = "https://securegw-stage.paytm.in/";
+        }
+        String callback = null;
+        if (callbackUrl == null || callbackUrl.trim().isEmpty()) {
+            callback = host + "theia/paytmCallback?ORDER_ID=" + orderId;
+        } else {
+            callback = callbackUrl;
+        }
 
-
-        PaytmOrder paytmOrder = new PaytmOrder(orderId, mId, txnToken, txnAmount, callBackUrl);
+        PaytmOrder paytmOrder = new PaytmOrder(orderId, mId, txnToken, txnAmount, callback);
 
         Log.i(TAG, paytmOrder.toString());
 
@@ -212,7 +222,7 @@ public class PaytmPlugin implements FlutterPlugin, MethodCallHandler, PluginRegi
 
         });
 
-
+        transactionManager.setShowPaymentUrl(host + "theia/api/v1/showPaymentPage");
         transactionManager.startTransaction(activity, PAYTM_REQUEST_CODE);
 
     }
