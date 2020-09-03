@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:paytm/paytm.dart';
@@ -12,9 +14,18 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String payment_response = null;
 
-  String mid = "";
-  String PAYTM_MERCHANT_KEY = "";
+  //Live
+  String mid = "LIVE_MID_HERE";
+  String PAYTM_MERCHANT_KEY = "LIVE_KEY_HERE";
   String website = "DEFAULT";
+  bool testing = false;
+
+  //Testing
+  // String mid = "TEST_MID_HERE";
+  // String PAYTM_MERCHANT_KEY = "TES_KEY_HERE";
+  // String website = "WEBSTAGING";
+  // bool testing = true;
+
   double amount = 1;
   bool loading = false;
 
@@ -37,7 +48,8 @@ class _MyAppState extends State<MyApp> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text('Use Production Details Only'),
+                Text(
+                    'Test Credentials works only on Android. Also make sure Paytm APP is not installed (For Testing).'),
 
                 SizedBox(
                   height: 10,
@@ -149,51 +161,51 @@ class _MyAppState extends State<MyApp> {
     });
     String orderId = DateTime.now().millisecondsSinceEpoch.toString();
 
-    String callBackUrl =
-        'https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=' + orderId;
+    String callBackUrl = (testing
+            ? 'https://securegw-stage.paytm.in'
+            : 'https://securegw.paytm.in') +
+        '/theia/paytmCallback?ORDER_ID=' +
+        orderId;
 
-    var url =
-        'https://desolate-anchorage-29312.herokuapp.com/generateTxnToken' +
-            "?mid=" +
-            mid +
-            "&key_secret=" +
-            PAYTM_MERCHANT_KEY +
-            "&website=" +
-            website +
-            "&orderId=" +
-            orderId +
-            "&amount=" +
-            amount.toString() +
-            "&callbackUrl=" +
-            callBackUrl +
-            "&custId=" +
-            "122" +
-            "&mode=" +
-            mode.toString();
+    var url = 'https://desolate-anchorage-29312.herokuapp.com/generateTxnToken';
 
-    final response = await http.get(url);
-
-    print("Response is");
-    print(response.body);
-    String txnToken = response.body;
-    setState(() {
-      payment_response = txnToken;
+    var body = json.encode({
+      "mid": mid,
+      "key_secret": PAYTM_MERCHANT_KEY,
+      "website": website,
+      "orderId": orderId,
+      "amount": amount.toString(),
+      "callbackUrl": callBackUrl,
+      "custId": "122",
+      "mode": mode.toString(),
+      "testing": testing ? 0 : 1
     });
 
-    var paytmResponse = Paytm.payWithPaytm(
-      mid,
-      orderId,
-      txnToken,
-      amount.toString(),
-      callBackUrl,
-    );
-
-    paytmResponse.then((value) {
-      print(value);
+    try {
+      final response = await http.post(
+        url,
+        body: body,
+        headers: {'Content-type': "application/json"},
+      );
+      print("Response is");
+      print(response.body);
+      String txnToken = response.body;
       setState(() {
-        loading = false;
-        payment_response = value.toString();
+        payment_response = txnToken;
       });
-    });
+
+      var paytmResponse = Paytm.payWithPaytm(
+          mid, orderId, txnToken, amount.toString(), callBackUrl, testing);
+
+      paytmResponse.then((value) {
+        print(value);
+        setState(() {
+          loading = false;
+          payment_response = value.toString();
+        });
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 }

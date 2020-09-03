@@ -6,12 +6,12 @@ A Flutter plugin to use the Paytm as a gateway for accepting online payments in 
 ![IMG_0CA99F9C709C-1](https://user-images.githubusercontent.com/25786428/82787888-07fbc180-9e85-11ea-87cb-754c6155b1d3.jpeg)
 
 
-### First of all get Production Credentials from Paytm
+### First of all get Credentials from Paytm
 Plugin will only work with Production Keys
 [https://dashboard.paytm.com/next/apikeys](https://dashboard.paytm.com/next/apikeys)
 
 
-### Lets’s begin
+### Let’s begin
 
 iOS Configuration:
 
@@ -31,50 +31,52 @@ In case merchant don’t have callback URL, Add an entry into Info.plist
     String orderId = DateTime.now().millisecondsSinceEpoch.toString();
 
     //Replace this with your server callBackUrl If any
-    String callBackUrl =
-        'https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=' + orderId;
-
-    //Replace this with your server generateTxnToken (This is a Token Generation Tool hosted on a free server. Must host the same on your server)
-    var url =
-        'https://desolate-anchorage-29312.herokuapp.com/generateTxnToken' +
-            "?mid=" +
-            mid +
-            "&key_secret=" +
-            key_secret +
-            "&website=" +
-            website +
-            "&orderId=" +
-            orderId +
-            "&amount=" +
-            amount.toString() +
-            "&callbackUrl=" +
-            callBackUrl +
-            "&custId=" +
-            "122" +
-            "&mode=" +
-            mode.toString();
-
-    final response = await http.get(url);
-
-    print("Response is");
-    print(response.body);
-    String txnToken = response.body;
-
-    var paytmResponse = Paytm.payWithPaytm(
-      mid,
-      orderId,
-      txnToken,
-      amount.toString(),
-      callBackUrl,
-    );
-
-    paytmResponse.then((value) {
-      print(value);
-      setState(() {
-        loading = false;
-        payment_response = value.toString();
-      });
-    });
+    String callBackUrl = (testing
+                ? 'https://securegw-stage.paytm.in'
+                : 'https://securegw.paytm.in') +
+            '/theia/paytmCallback?ORDER_ID=' +
+            orderId;
+    
+        var url = 'https://desolate-anchorage-29312.herokuapp.com/generateTxnToken';
+    
+        var body = json.encode({
+          "mid": mid,
+          "key_secret": PAYTM_MERCHANT_KEY,
+          "website": website,
+          "orderId": orderId,
+          "amount": amount.toString(),
+          "callbackUrl": callBackUrl,
+          "custId": "122",
+          "mode": mode.toString(),
+          "testing": testing ? 0 : 1
+        });
+    
+        try {
+          final response = await http.post(
+            url,
+            body: body,
+            headers: {'Content-type': "application/json"},
+          );
+          print("Response is");
+          print(response.body);
+          String txnToken = response.body;
+          setState(() {
+            payment_response = txnToken;
+          });
+    
+          var paytmResponse = Paytm.payWithPaytm(
+              mid, orderId, txnToken, amount.toString(), callBackUrl, testing);
+    
+          paytmResponse.then((value) {
+            print(value);
+            setState(() {
+              loading = false;
+              payment_response = value.toString();
+            });
+          });
+        } catch (e) {
+          print(e);
+        }
   }
   
   ``` 

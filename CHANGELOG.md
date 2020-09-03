@@ -1,7 +1,18 @@
+## 1.0.5
+
+* TODO: Updated ReadMe file.
+
+## 1.0.4
+
+* TODO: Added Staging Support (Android).
+
+## 1.0.3
+
+* TODO: Bug Fixes.
 
 ## 1.0.2
 
-* TODO: Describe initial release.
+* TODO: PAYTM ALL IN ONE SDK.
 
 ## 0.0.5
 

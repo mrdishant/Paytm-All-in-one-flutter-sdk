@@ -8,17 +8,18 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.0'
+        classpath 'com.android.tools.build:gradle:4.0.1'
     }
 }
 
 rootProject.allprojects {
     repositories {
-        google()
-        jcenter()
         maven {
             url "https://artifactory.paytm.in/libs-release-local"
         }
+        google()
+        jcenter()
+
     }
 }
 
@@ -36,6 +37,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.paytm.appinvokesdk:appinvokesdk:1.2'
+    implementation 'com.paytm.appinvokesdk:appinvokesdk:1.3'
 }
 
