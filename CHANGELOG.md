@@ -1,3 +1,11 @@
+## 1.0.7
+
+* TODO: Paytm Android SDK updated.
+
+## 1.0.6
+
+* TODO: Updated Min SDK Version Android.
+
 ## 1.0.5
 
 * TODO: Updated ReadMe file.

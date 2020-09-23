@@ -2,16 +2,16 @@
 
 A Flutter plugin to use the Paytm as a gateway for accepting online payments in Flutter app.
 
-### Example App in iOS
+## Example App in iOS
 ![IMG_0CA99F9C709C-1](https://user-images.githubusercontent.com/25786428/82787888-07fbc180-9e85-11ea-87cb-754c6155b1d3.jpeg)
 
 
-### First of all get Credentials from Paytm
+## First of all get Credentials from Paytm
 Plugin will only work with Production Keys
 [https://dashboard.paytm.com/next/apikeys](https://dashboard.paytm.com/next/apikeys)
 
 
-### Let’s begin
+## Let’s begin
 
 iOS Configuration:
 
@@ -24,7 +24,7 @@ In case merchant don’t have callback URL, Add an entry into Info.plist
 ![app-invoke-ios-inti](https://user-images.githubusercontent.com/25786428/82787531-3c22b280-9e84-11ea-9923-c18f2bc904de.png)
  
 
-### Start Payment
+## Start Payment
 ```
   void generateTxnToken(int mode) async {
     
@@ -81,11 +81,11 @@ In case merchant don’t have callback URL, Add an entry into Info.plist
   
   ``` 
 
-### GENERATE TOKEN
+## GENERATE TOKEN
 For SERVER CODE:
 [Paytm Plugin Server Code](https://github.com/mrdishant/Paytm-Plugin-Server)
 
-### Support
+## Support
 For Cloning the example app code visit:
 [Paytm Plugin](https://github.com/mrdishant/Paytm-All-in-one-flutter-sdk.git)
 
