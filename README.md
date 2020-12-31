@@ -99,8 +99,8 @@ For SERVER CODE:
 [Paytm Plugin Server Code](https://github.com/mrdishant/Paytm-Plugin-Server)
 
 ## Support
-
-[!<img src="" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" >](https://www.buymeacoffee.com/mrdishant)
+<a href="https://www.buymeacoffee.com/mrdishant" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+[!<img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" >](https://www.buymeacoffee.com/mrdishant)
 
 
 For Cloning the example app code visit:
