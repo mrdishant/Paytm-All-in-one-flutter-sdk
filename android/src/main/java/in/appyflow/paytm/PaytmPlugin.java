@@ -11,8 +11,12 @@ import com.paytm.pgsdk.PaytmOrder;
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
 import com.paytm.pgsdk.TransactionManager;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
@@ -70,7 +74,9 @@ public class PaytmPlugin implements FlutterPlugin, MethodCallHandler, PluginRegi
             Map<String, Object> paramMap = new HashMap<>();
 
             if (data.getStringExtra("response") != null && data.getStringExtra("response").length() > 0) {
-                for (String key : data.getExtras().keySet()) {
+
+                paramMap.put("error", false);
+                for (String key : Objects.requireNonNull(data.getExtras()).keySet()) {
                     paramMap.put(key, data.getExtras().getString(key));
                 }
             } else {
@@ -129,10 +135,13 @@ public class PaytmPlugin implements FlutterPlugin, MethodCallHandler, PluginRegi
 
                 Map<String, Object> paramMap = new HashMap<>();
 
-
+                Map<String, Object> responseMap = new HashMap<>();
                 for (String key : bundle.keySet()) {
-                    paramMap.put(key, bundle.getString(key));
+                    responseMap.put(key, bundle.getString(key));
                 }
+
+                paramMap.put("error", false);
+                paramMap.put("response", responseMap);
 
                 Log.i(TAG, paramMap.toString());
 
@@ -236,6 +245,7 @@ public class PaytmPlugin implements FlutterPlugin, MethodCallHandler, PluginRegi
     }
 
     private static void sendResponse(Map<String, Object> paramMap) {
+        
         flutterResult.success(paramMap);
     }
 

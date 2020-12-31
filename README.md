@@ -2,6 +2,9 @@
 
 A Flutter plugin to use the Paytm as a gateway for accepting online payments in Flutter app.
 
+## For Testing Credentials make sure Paytm APP is not installed on the device.
+
+
 ## Example App in iOS
 ![IMG_0CA99F9C709C-1](https://user-images.githubusercontent.com/25786428/82787888-07fbc180-9e85-11ea-87cb-754c6155b1d3.jpeg)
 
@@ -28,17 +31,18 @@ In case merchant don’t have callback URL, Add an entry into Info.plist
 ```
   void generateTxnToken(int mode) async {
     
-    String orderId = DateTime.now().millisecondsSinceEpoch.toString();
+        String orderId = DateTime.now().millisecondsSinceEpoch.toString();
 
-    //Replace this with your server callBackUrl If any
-    String callBackUrl = (testing
+        String callBackUrl = (testing
                 ? 'https://securegw-stage.paytm.in'
                 : 'https://securegw.paytm.in') +
             '/theia/paytmCallback?ORDER_ID=' +
             orderId;
-    
+
+        //Host the Server Side Code on your Server and use your URL here. The following URL may or may not work. Because hosted on free server.
+        //Server Side code url: https://github.com/mrdishant/Paytm-Plugin-Server
         var url = 'https://desolate-anchorage-29312.herokuapp.com/generateTxnToken';
-    
+
         var body = json.encode({
           "mid": mid,
           "key_secret": PAYTM_MERCHANT_KEY,
@@ -50,7 +54,7 @@ In case merchant don’t have callback URL, Add an entry into Info.plist
           "mode": mode.toString(),
           "testing": testing ? 0 : 1
         });
-    
+
         try {
           final response = await http.post(
             url,
@@ -63,15 +67,24 @@ In case merchant don’t have callback URL, Add an entry into Info.plist
           setState(() {
             payment_response = txnToken;
           });
-    
+
           var paytmResponse = Paytm.payWithPaytm(
               mid, orderId, txnToken, amount.toString(), callBackUrl, testing);
-    
+
           paytmResponse.then((value) {
             print(value);
             setState(() {
               loading = false;
-              payment_response = value.toString();
+              print("Value is ");
+              print(value);
+              if(value['error']){
+                payment_response = value['errorMessage'];
+              }else{
+                if(value['response']!=null){
+                  payment_response = value['response']['STATUS'];
+                }
+              }
+              payment_response += "\n"+value.toString();
             });
           });
         } catch (e) {
@@ -86,6 +99,10 @@ For SERVER CODE:
 [Paytm Plugin Server Code](https://github.com/mrdishant/Paytm-Plugin-Server)
 
 ## Support
+
+[!<img src="" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" >](https://www.buymeacoffee.com/mrdishant)
+
+
 For Cloning the example app code visit:
 [Paytm Plugin](https://github.com/mrdishant/Paytm-All-in-one-flutter-sdk.git)
 

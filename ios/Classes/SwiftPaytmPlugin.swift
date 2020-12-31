@@ -3,6 +3,26 @@ import UIKit
 import AppInvokeSDK
 
 public class SwiftPaytmPlugin: NSObject, FlutterPlugin, AIDelegate{
+    public func didFinish(with status: AIPaymentStatus, response: [String : Any]) {
+        print("Response")
+        print(type(of: response))
+        print(response)
+        
+        var paramMap = [String: Any]()
+    
+        if(status==AIPaymentStatus.failed){
+            paramMap["error"]=true
+            paramMap["errorMessage"]=response["RESPMSG"]
+            paramMap["response"]=response
+        }else{
+            paramMap["error"]=false
+            paramMap["response"]=response
+        }
+
+        
+        self.flutterResult!(paramMap)
+    }
+    
     
     private var appInvoke : AIHandler = AIHandler()
     
@@ -15,39 +35,6 @@ public class SwiftPaytmPlugin: NSObject, FlutterPlugin, AIDelegate{
                 UIApplication.shared.keyWindow?.rootViewController?.present(vc, animated: true, completion: nil)
             }
         }
-    }
-    
-    
-    public func didFinish(with success: Bool, response: [String : Any]) {
-        print("Response")
-        print(response)
-        
-        var paramMap = [String: Any]()
-        
-        let status=response["STATUS"] as! String
-        
-        guard status.count >= 0 else {
-            paramMap["error"]=true
-            paramMap["errorMessage"]="Transaction Cancelled"
-            return;
-        }
-        
-        
-        
-        if(status.elementsEqual("TXN_FAILURE")){
-            paramMap["error"]=true
-            paramMap["errorMessage"]=response["RESPMSG"]
-            paramMap["response"]=response
-        }else{
-            paramMap["error"]=false
-            paramMap["response"]=response
-        }
-        
-        
-        
-        
-        
-        self.flutterResult!(paramMap)
     }
     
     
@@ -77,11 +64,20 @@ public class SwiftPaytmPlugin: NSObject, FlutterPlugin, AIDelegate{
             let amount = arguements!["txnAmount"] as! String
             let txnToken = arguements!["txnToken"] as! String
             let callBackUrl = arguements!["callBackUrl"] as! String
+            let isStaging = arguements!["isStaging"] as! Bool
+            
+            var environment:AIEnvironment;
+            
+            if(isStaging){
+                environment=AIEnvironment.staging
+            }else{
+                environment=AIEnvironment.production
+            }
             
             print(callBackUrl);
             
             
-            appInvoke.openPaytm(merchantId: mId, orderId: orderId, txnToken: txnToken, amount: amount, redirectionUrl: callBackUrl , delegate: self)
+            appInvoke.openPaytm(merchantId: mId, orderId: orderId, txnToken: txnToken, amount: amount, callbackUrl: callBackUrl , delegate: self, environment: environment)
             
         }
         
@@ -95,6 +91,8 @@ public class SwiftPaytmPlugin: NSObject, FlutterPlugin, AIDelegate{
         print(url.absoluteString)
         
         var dict = [String:String]()
+        
+        
         let components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
         if let queryItems = components.queryItems {
             for item in queryItems {
@@ -104,11 +102,11 @@ public class SwiftPaytmPlugin: NSObject, FlutterPlugin, AIDelegate{
         print(dict)
         
         var paramMap = [String: Any]()
-        
+
         if dict["response"] != nil && dict["response"]!.count > 0{
             paramMap["error"]=false
             paramMap["response"]=dict["response"]
-            
+
         }else{
             paramMap["error"]=true
             paramMap["errorMessage"]="Transaction Cancelled"

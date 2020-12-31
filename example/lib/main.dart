@@ -22,7 +22,7 @@ class _MyAppState extends State<MyApp> {
 
   //Testing
   // String mid = "TEST_MID_HERE";
-  // String PAYTM_MERCHANT_KEY = "TES_KEY_HERE";
+  // String PAYTM_MERCHANT_KEY = "TEST_KEY_HERE";
   // String website = "WEBSTAGING";
   // bool testing = true;
 
@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                    'Test Credentials works only on Android. Also make sure Paytm APP is not installed (For Testing).'),
+                    'For Testing Credentials make sure Paytm APP is not installed on the device.'),
 
                 SizedBox(
                   height: 10,
@@ -167,6 +167,8 @@ class _MyAppState extends State<MyApp> {
         '/theia/paytmCallback?ORDER_ID=' +
         orderId;
 
+    //Host the Server Side Code on your Server and use your URL here. The following URL may or may not work. Because hosted on free server.
+    //Server Side code url: https://github.com/mrdishant/Paytm-Plugin-Server
     var url = 'https://desolate-anchorage-29312.herokuapp.com/generateTxnToken';
 
     var body = json.encode({
@@ -201,7 +203,16 @@ class _MyAppState extends State<MyApp> {
         print(value);
         setState(() {
           loading = false;
-          payment_response = value.toString();
+          print("Value is ");
+          print(value);
+          if(value['error']){
+            payment_response = value['errorMessage'];
+          }else{
+            if(value['response']!=null){
+              payment_response = value['response']['STATUS'];
+            }
+          }
+          payment_response += "\n"+value.toString();
         });
       });
     } catch (e) {

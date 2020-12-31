@@ -1,3 +1,14 @@
+## 2.0.0
+
+* Update: Paytm iOS SDK updated + Stagging Support Added.
+* Bug Fix: Paytm SDK Response Bug Fix.
+
+
+## 1.0.8
+
+* Update: Paytm Android SDK updated.
+* Bug Fix: Paytm Android SDK Response Fix.
+
 ## 1.0.7
 
 * TODO: Paytm Android SDK updated.

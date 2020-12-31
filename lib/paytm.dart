@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
@@ -28,6 +29,11 @@ class Paytm {
       'callBackUrl': callBackUrl,
       "isStaging": isStaging
     });
+
+    if (response['response'] != null && response['response'].runtimeType.toString() == "String") {
+      response['response']=json.decode(response['response']);
+    }
+
 
     return response;
   }

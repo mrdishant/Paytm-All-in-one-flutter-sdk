@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.android.tools.build:gradle:4.1.1'
     }
 }
 
@@ -37,6 +37,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.paytm.appinvokesdk:appinvokesdk:1.4'
+    implementation 'com.paytm.appinvokesdk:appinvokesdk:1.5.3'
 }
 
