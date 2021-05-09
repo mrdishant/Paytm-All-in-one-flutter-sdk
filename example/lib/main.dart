@@ -12,7 +12,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String payment_response = null;
+  String payment_response;
 
   //Live
   String mid = "LIVE_MID_HERE";
@@ -185,7 +185,7 @@ class _MyAppState extends State<MyApp> {
 
     try {
       final response = await http.post(
-        url,
+        Uri.parse(url),
         body: body,
         headers: {'Content-type': "application/json"},
       );
@@ -205,14 +205,14 @@ class _MyAppState extends State<MyApp> {
           loading = false;
           print("Value is ");
           print(value);
-          if(value['error']){
+          if (value['error']) {
             payment_response = value['errorMessage'];
-          }else{
-            if(value['response']!=null){
+          } else {
+            if (value['response'] != null) {
               payment_response = value['response']['STATUS'];
             }
           }
-          payment_response += "\n"+value.toString();
+          payment_response += "\n" + value.toString();
         });
       });
     } catch (e) {
