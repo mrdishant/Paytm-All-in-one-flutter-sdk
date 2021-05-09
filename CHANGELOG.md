@@ -1,3 +1,8 @@
+## 3.0.0
+
+* Update: Paytm iOS SDK updated + Null Safety Added.
+
+
 ## 2.0.0
 
 * Update: Paytm iOS SDK updated + Stagging Support Added.
@@ -11,44 +16,44 @@
 
 ## 1.0.7
 
-* TODO: Paytm Android SDK updated.
+* Update: Paytm Android SDK updated.
 
 ## 1.0.6
 
-* TODO: Updated Min SDK Version Android.
+* Update: Updated Min SDK Version Android.
 
 ## 1.0.5
 
-* TODO: Updated ReadMe file.
+* Update: Updated ReadMe file.
 
 ## 1.0.4
 
-* TODO: Added Staging Support (Android).
+* Update: Added Staging Support (Android).
 
 ## 1.0.3
 
-* TODO: Bug Fixes.
+* Update: Bug Fixes.
 
 ## 1.0.2
 
-* TODO: PAYTM ALL IN ONE SDK.
+* Update: PAYTM ALL IN ONE SDK.
 
 ## 0.0.5
 
-* TODO: Bug Fixes.
+* Update: Bug Fixes.
 
 ## 0.0.4
 
-* TODO: ANDROID X Support added.
+* Update: ANDROID X Support added.
 
 ## 0.0.3
 
-* TODO: ANDROID X Support added.
+* Update: ANDROID X Support added.
 
 ## 0.0.2
 
-* TODO: Bug Fixes.
+* Update: Bug Fixes.
 
 ## 0.0.1
 
-* TODO: Paytm as a payment gateway in your flutter app.
+* Update: Paytm as a payment gateway in your flutter app.
