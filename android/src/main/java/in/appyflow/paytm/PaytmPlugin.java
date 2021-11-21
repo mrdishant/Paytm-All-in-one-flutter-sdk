@@ -102,13 +102,14 @@ public class PaytmPlugin implements FlutterPlugin, MethodCallHandler, PluginRegi
             String txnAmount = call.argument("txnAmount").toString();
             String callBackUrl = call.argument("callBackUrl");
             boolean isStaging = call.argument("isStaging");
-            beginPayment(mId, orderId, txnToken, txnAmount, callBackUrl,isStaging);
+            boolean appInvokeEnabled = call.argument("appInvokeEnabled");
+            beginPayment(mId, orderId, txnToken, txnAmount, callBackUrl,isStaging,appInvokeEnabled);
         } else {
             result.notImplemented();
         }
     }
 
-    private void beginPayment(String mId, String orderId, String txnToken, String txnAmount, String callBackUrl,boolean isStaging) {
+    private void beginPayment(String mId, String orderId, String txnToken, String txnAmount, String callBackUrl,boolean isStaging, boolean appInvokeEnabled) {
 
         String host = "https://securegw.paytm.in/";
         if (isStaging) {
@@ -233,6 +234,7 @@ public class PaytmPlugin implements FlutterPlugin, MethodCallHandler, PluginRegi
             }
 
         });
+        transactionManager.setAppInvokeEnabled(appInvokeEnabled);
         transactionManager.setShowPaymentUrl(host + "theia/api/v1/showPaymentPage");
         transactionManager.startTransaction(activity, PAYTM_REQUEST_CODE);
 

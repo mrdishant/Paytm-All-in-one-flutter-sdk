@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                    'For Testing Credentials make sure Paytm APP is not installed on the device.'),
+                    'For Testing Credentials make sure appInvokeEnabled set to FALSE or Paytm APP is not installed on the device.'),
 
                 SizedBox(
                   height: 10,
@@ -169,6 +169,7 @@ class _MyAppState extends State<MyApp> {
 
     //Host the Server Side Code on your Server and use your URL here. The following URL may or may not work. Because hosted on free server.
     //Server Side code url: https://github.com/mrdishant/Paytm-Plugin-Server
+
     var url = 'https://desolate-anchorage-29312.herokuapp.com/generateTxnToken';
 
     var body = json.encode({
@@ -189,6 +190,7 @@ class _MyAppState extends State<MyApp> {
         body: body,
         headers: {'Content-type': "application/json"},
       );
+
       print("Response is");
       print(response.body);
       String txnToken = response.body;
@@ -197,7 +199,13 @@ class _MyAppState extends State<MyApp> {
       });
 
       var paytmResponse = Paytm.payWithPaytm(
-          mid, orderId, txnToken, amount.toString(), callBackUrl, testing);
+          mId: mid,
+          orderId: orderId,
+          txnToken: txnToken,
+          txnAmount: amount.toString(),
+          callBackUrl: callBackUrl,
+          staging: testing,
+          appInvokeEnabled: false);
 
       paytmResponse.then((value) {
         print(value);

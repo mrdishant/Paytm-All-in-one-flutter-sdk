@@ -21,9 +21,9 @@ A new Flutter plugin
 #  s.xcconfig = { 'OTHER_LDFLAGS' => '-framework PaymentSDK' }
 #  s.vendored_frameworks = 'PaymentSDK.framework'
   
-  s.preserve_paths = 'AppInvokeSDK.framework'
+  s.preserve_paths = 'AppInvokeSDK.xcframework'
   s.xcconfig = { 'OTHER_LDFLAGS' => '-framework AppInvokeSDK' }
-  s.vendored_frameworks = 'AppInvokeSDK.framework'
+  s.vendored_frameworks = 'AppInvokeSDK.xcframework'
   
   s.static_framework = true
 

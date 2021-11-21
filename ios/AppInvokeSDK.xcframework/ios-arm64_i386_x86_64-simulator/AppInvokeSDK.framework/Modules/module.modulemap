@@ -1,0 +1,11 @@
+framework module AppInvokeSDK {
+  umbrella header "AppInvokeSDK.h"
+
+  export *
+  module * { export * }
+}
+
+module AppInvokeSDK.Swift {
+    header "AppInvokeSDK-Swift.h"
+    requires objc
+}

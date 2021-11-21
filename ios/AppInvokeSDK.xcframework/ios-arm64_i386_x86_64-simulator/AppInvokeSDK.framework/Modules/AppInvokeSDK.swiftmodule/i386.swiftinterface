@@ -1,0 +1,51 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
+// swift-module-flags: -target i386-apple-ios10.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name AppInvokeSDK
+@_exported import AppInvokeSDK
+import Foundation
+import Swift
+import WebKit
+@objc(AIDelegate) public protocol AIDelegate : ObjectiveC.NSObjectProtocol {
+  @objc func openPaymentWebVC(_ controller: UIKit.UIViewController?)
+  @objc func didFinish(with status: AppInvokeSDK.AIPaymentStatus, response: [Swift.String : Any])
+}
+@objc(AIPaymentStatus) public enum AIPaymentStatus : Swift.Int {
+  case success
+  case failed
+  case pending
+  case cancel
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @objc(AIHandler) public class AIHandler : ObjectiveC.NSObject, UIKit.UIAdaptivePresentationControllerDelegate {
+  @objc public func openPaytm(merchantId: Swift.String, orderId: Swift.String, txnToken: Swift.String, amount: Swift.String, callbackUrl: Swift.String?, delegate: AppInvokeSDK.AIDelegate, environment: AppInvokeSDK.AIEnvironment, mobileHash: Swift.String? = "", isMobileVerificationRequired: Swift.String? = "false", urlScheme: Swift.String?)
+  @objc public func openPaytmSubscription(merchantId: Swift.String, orderId: Swift.String, txnToken: Swift.String, amount: Swift.String, callbackUrl: Swift.String?, delegate: AppInvokeSDK.AIDelegate, environment: AppInvokeSDK.AIEnvironment, mobileHash: Swift.String? = "", isMobileVerificationRequired: Swift.String? = "false", urlScheme: Swift.String?)
+  @objc public func setBridgeName(name: Swift.String)
+  @objc public func restrictAppInvokeFlow(restrict: Swift.Bool)
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc(AIEnvironment) public enum AIEnvironment : Swift.Int {
+  case production
+  case staging
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public let PRODUCTION_PG_DOMAIN: Swift.String
+public let STAGING_PG_DOMAIN: Swift.String
+public var kStaging_PGServerURL: Swift.String
+public var kProduction_PGServerURL: Swift.String
+public var kStaging_PGCallbackURL: Swift.String
+public var kProduction_PGCallbackURL: Swift.String
+extension AppInvokeSDK.AIPaymentStatus : Swift.Equatable {}
+extension AppInvokeSDK.AIPaymentStatus : Swift.Hashable {}
+extension AppInvokeSDK.AIPaymentStatus : Swift.RawRepresentable {}
+extension AppInvokeSDK.AIEnvironment : Swift.Equatable {}
+extension AppInvokeSDK.AIEnvironment : Swift.Hashable {}
+extension AppInvokeSDK.AIEnvironment : Swift.RawRepresentable {}

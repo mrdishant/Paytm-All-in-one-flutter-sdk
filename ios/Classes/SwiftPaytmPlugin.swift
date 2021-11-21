@@ -54,17 +54,17 @@ public class SwiftPaytmPlugin: NSObject, FlutterPlugin, AIDelegate{
         
         self.flutterResult=result
         
-        let arguements = call.arguments as? NSDictionary
-        print(arguements)
+        let arguments = call.arguments as? NSDictionary
+        print(arguments)
         print(call.method)
         
         if(call.method.elementsEqual("payWithPaytm")){
-            let mId = arguements!["mId"] as! String
-            let orderId = arguements!["orderId"] as! String
-            let amount = arguements!["txnAmount"] as! String
-            let txnToken = arguements!["txnToken"] as! String
-            let callBackUrl = arguements!["callBackUrl"] as! String
-            let isStaging = arguements!["isStaging"] as! Bool
+            let mId = arguments!["mId"] as! String
+            let orderId = arguments!["orderId"] as! String
+            let amount = arguments!["txnAmount"] as! String
+            let txnToken = arguments!["txnToken"] as! String
+            let callBackUrl = arguments!["callBackUrl"] as! String
+            let isStaging = arguments!["isStaging"] as! Bool
             
             var environment:AIEnvironment;
             
@@ -77,7 +77,7 @@ public class SwiftPaytmPlugin: NSObject, FlutterPlugin, AIDelegate{
             print(callBackUrl);
             
             
-            appInvoke.openPaytm(merchantId: mId, orderId: orderId, txnToken: txnToken, amount: amount, callbackUrl: callBackUrl , delegate: self, environment: environment)
+            appInvoke.openPaytm(merchantId: mId, orderId: orderId, txnToken: txnToken, amount: amount, callbackUrl: callBackUrl , delegate: self, environment: environment,urlScheme: "paytm"+mId)
             
         }
         
