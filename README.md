@@ -7,7 +7,7 @@ A Flutter plugin to use the Paytm as a payment gateway for accepting online paym
 
 ## Example App in iOS
 <!-- ![IMG_0CA99F9C709C-1](https://user-images.githubusercontent.com/25786428/82787888-07fbc180-9e85-11ea-87cb-754c6155b1d3.jpeg) -->
-<img src="https://user-images.githubusercontent.com/25786428/82787888-07fbc180-9e85-11ea-87cb-754c6155b1d3.jpeg" width="48">
+<img src="https://user-images.githubusercontent.com/25786428/82787888-07fbc180-9e85-11ea-87cb-754c6155b1d3.jpeg" width="500">
 
 
 ## First of all get Credentials from Paytm
