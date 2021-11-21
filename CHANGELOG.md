@@ -1,3 +1,8 @@
+## 3.0.1
+
+* Update: Paytm iOS and Android SDK updated.
+
+
 ## 3.0.0
 
 * Update: Paytm iOS SDK updated + Null Safety Added.
