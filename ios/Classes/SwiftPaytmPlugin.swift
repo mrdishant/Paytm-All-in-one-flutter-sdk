@@ -4,12 +4,12 @@ import AppInvokeSDK
 
 public class SwiftPaytmPlugin: NSObject, FlutterPlugin, AIDelegate{
     public func didFinish(with status: AIPaymentStatus, response: [String : Any]) {
-        print("Response")
-        print(type(of: response))
-        print(response)
+        //        print("Response")
+        //        print(type(of: response))
+        //        print(response)
         
         var paramMap = [String: Any]()
-    
+        
         if(status==AIPaymentStatus.failed){
             paramMap["error"]=true
             paramMap["errorMessage"]=response["RESPMSG"]
@@ -18,7 +18,7 @@ public class SwiftPaytmPlugin: NSObject, FlutterPlugin, AIDelegate{
             paramMap["error"]=false
             paramMap["response"]=response
         }
-
+        
         
         self.flutterResult!(paramMap)
     }
@@ -27,7 +27,7 @@ public class SwiftPaytmPlugin: NSObject, FlutterPlugin, AIDelegate{
     private var appInvoke : AIHandler = AIHandler()
     
     public func openPaymentWebVC(_ controller: UIViewController?) {
-        print("Response2")
+        //        print("Response2")
         
         if let vc = controller {
             
@@ -55,8 +55,8 @@ public class SwiftPaytmPlugin: NSObject, FlutterPlugin, AIDelegate{
         self.flutterResult=result
         
         let arguments = call.arguments as? NSDictionary
-        print(arguments)
-        print(call.method)
+        //        print(arguments)
+        //        print(call.method)
         
         if(call.method.elementsEqual("payWithPaytm")){
             let mId = arguments!["mId"] as! String
@@ -74,7 +74,7 @@ public class SwiftPaytmPlugin: NSObject, FlutterPlugin, AIDelegate{
                 environment=AIEnvironment.production
             }
             
-            print(callBackUrl);
+            //            print(callBackUrl);
             
             
             appInvoke.openPaytm(merchantId: mId, orderId: orderId, txnToken: txnToken, amount: amount, callbackUrl: callBackUrl , delegate: self, environment: environment,urlScheme: "paytm"+mId)
@@ -87,8 +87,8 @@ public class SwiftPaytmPlugin: NSObject, FlutterPlugin, AIDelegate{
     
     
     public func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        print("Response in Plugin")
-        print(url.absoluteString)
+        //        print("Response in Plugin")
+        //        print(url.absoluteString)
         
         var dict = [String:String]()
         
@@ -99,22 +99,23 @@ public class SwiftPaytmPlugin: NSObject, FlutterPlugin, AIDelegate{
                 dict[item.name] = item.value!
             }
         }
-        print(dict)
+        //        print(dict)
         
         var paramMap = [String: Any]()
-
+        
         if dict["response"] != nil && dict["response"]!.count > 0{
             paramMap["error"]=false
             paramMap["response"]=dict["response"]
-
+            
         }else{
             paramMap["error"]=true
             paramMap["errorMessage"]="Transaction Cancelled"
             paramMap["status"]=dict["status"]
         }
         
-        
-        self.flutterResult!(paramMap)
+        if( self.flutterResult != nil){
+            self.flutterResult!(paramMap)
+        }
         
         return true
     }
